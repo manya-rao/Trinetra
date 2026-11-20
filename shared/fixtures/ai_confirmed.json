@@ -1,0 +1,44 @@
+{
+  "id": "pass_demo_ai_confirmed_003",
+  "verdict": "ai_confirmed",
+  "confidence_band": "high",
+  "reasons": [
+    {
+      "key": "c2pa_ai_provenance",
+      "en": "Cryptographic C2PA provenance manifest confirms synthetic AI generation.",
+      "hi": "क्रिप्टोग्राफिक C2PA प्रामाणिकता पुष्टि करती है कि यह AI-निर्मित है।"
+    }
+  ],
+  "eyes": {
+    "origin": "none",
+    "change": "n/a",
+    "synthesis": "confirmed"
+  },
+  "origin": null,
+  "diff": null,
+  "c2pa": {
+    "status": "valid",
+    "issuer": "DEMO C2PA Authority / Synthetic Generator",
+    "ai_generated": true,
+    "history": [
+      {
+        "action": "c2pa.created",
+        "software": "Trinetra Synthetic Engine Demo v1.0"
+      }
+    ]
+  },
+  "suspicious_regions_url": null,
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap here.",
+    "hi": "त्रिनेत्र फैक्ट-चेक इंडेक्स से मिलान किया गया। व्यापक वेब खोज के लिए, यहाँ टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/",
+    "tineye": "https://tineye.com/"
+  },
+  "lang": {
+    "en": "AI-generated (confirmed) via signed Content Credentials.",
+    "hi": "हस्ताक्षरित कंटेंट क्रेडेंशियल के माध्यम से AI-निर्मित (पुष्टि की गई)।"
+  },
+  "demo_data": true
+}

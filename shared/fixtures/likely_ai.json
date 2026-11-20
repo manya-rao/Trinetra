@@ -1,0 +1,44 @@
+{
+  "id": "pass_demo_likely_ai_004",
+  "verdict": "likely_ai",
+  "confidence_band": "medium",
+  "reasons": [
+    {
+      "key": "clip_ai_signal",
+      "en": "Visual artifacts and embedding distribution consistent with generative AI patterns.",
+      "hi": "जेनेरेटिव AI पैटर्न के अनुरूप दृश्य लक्षण और एम्बेडिंग वितरण।"
+    },
+    {
+      "key": "no_camera_metadata",
+      "en": "Complete absence of camera hardware EXIF metadata or capture timeline.",
+      "hi": "कैमरा हार्डवेयर EXIF मेटाडेटा या कैप्चर टाइमलाइन पूरी तरह अनुपस्थित।"
+    }
+  ],
+  "eyes": {
+    "origin": "none",
+    "change": "n/a",
+    "synthesis": "likely"
+  },
+  "origin": null,
+  "diff": null,
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": "/files/suspicious_demo_likely_ai.png",
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap here.",
+    "hi": "त्रिनेत्र फैक्ट-चेक इंडेक्स से मिलान किया गया। व्यापक वेब खोज के लिए, यहाँ टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/",
+    "tineye": "https://tineye.com/"
+  },
+  "lang": {
+    "en": "Likely AI-generated: synthesis signals detected across vision indicators.",
+    "hi": "AI-निर्मित होने की संभावना: दृष्टि संकेतकों में संश्लेषण संकेत पाए गए।"
+  },
+  "demo_data": true
+}

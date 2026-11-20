@@ -1,0 +1,146 @@
+{
+  "verdicts": {
+    "original": {
+      "headline": {
+        "en": "Original Source Photo",
+        "hi": "मूल स्रोत तस्वीर"
+      },
+      "detail": {
+        "en": "Matched against indexed source in the Trinetra fact-check repository with no structural modifications.",
+        "hi": "त्रिनेत्र फैक्ट-चेक रिपॉजिटरी में मूल स्रोत से मिलान हुआ, कोई संरचनात्मक संशोधन नहीं मिला।"
+      }
+    },
+    "modified": {
+      "headline": {
+        "en": "Modified Image",
+        "hi": "संशोधित तस्वीर"
+      },
+      "detail": {
+        "en": "Matched indexed original image, but alignment diff reveals altered, removed, or inserted regions.",
+        "hi": "मूल तस्वीर से मिलान हुआ, लेकिन संरेखण डिफ़ परिवर्तित या जोड़े गए क्षेत्रों को उजागर करता है।"
+      }
+    },
+    "out_of_context": {
+      "headline": {
+        "en": "Recycled / Out of Context",
+        "hi": "पुनर्चक्रित / संदर्भ से बाहर"
+      },
+      "detail": {
+        "en": "Original image is authentic but associated claim contradicts historical publication record.",
+        "hi": "मूल तस्वीर प्रामाणिक है लेकिन किया गया दावा ऐतिहासिक रिकॉर्ड से मेल नहीं खाता।"
+      }
+    },
+    "ai_confirmed": {
+      "headline": {
+        "en": "AI-Generated (Confirmed)",
+        "hi": "AI-निर्मित (पुष्टि की गई)"
+      },
+      "detail": {
+        "en": "Cryptographic C2PA provenance credentials confirm this image was created using generative AI software.",
+        "hi": "क्रिप्टोग्राफ़िक C2PA साख पुष्टि करती है कि यह छवि जेनेरेटिव AI सॉफ़्टवेयर द्वारा बनाई गई थी।"
+      }
+    },
+    "likely_ai": {
+      "headline": {
+        "en": "Likely AI-Generated",
+        "hi": "संभवतः AI-निर्मित"
+      },
+      "detail": {
+        "en": "Multiple synthetic visual artifacts and generator noise signatures detected across vision models.",
+        "hi": "दृष्टि मॉडल में कई सिंथेटिक दृश्य कलाकृतियां और जनरेटर शोर हस्ताक्षर पाए गए।"
+      }
+    },
+    "likely_real_looking": {
+      "headline": {
+        "en": "No AI Signs Found (Not Proof)",
+        "hi": "कोई AI संकेत नहीं मिला (प्रमाण नहीं)"
+      },
+      "detail": {
+        "en": "No synthetic generation patterns detected, though this does not constitute definitive proof of authenticity.",
+        "hi": "कोई सिंथेटिक पैटर्न नहीं मिला, हालांकि यह प्रामाणिकता का निश्चित प्रमाण नहीं है।"
+      }
+    },
+    "inconclusive": {
+      "headline": {
+        "en": "Inconclusive Analysis",
+        "hi": "अनिर्णायक विश्लेषण"
+      },
+      "detail": {
+        "en": "Insufficient or conflicting visual signals. Heavy compression or resizing prevents conclusive determination.",
+        "hi": "अपर्याप्त या विरोधाभासी दृश्य संकेत। अत्यधिक संपीड़न या आकार परिवर्तन निर्णायक विश्लेषण को रोकता है।"
+      }
+    }
+  },
+  "reasons": {
+    "spectrum_peaks": {
+      "en": "Frequency domain spectrum reveals periodic generative artifacts.",
+      "hi": "फ़्रिक्वेंसी स्पेक्ट्रम आवधिक जेनेरेटिव पैटर्न प्रकट करता है।"
+    },
+    "noise_uniform": {
+      "en": "Uniform noise residual pattern inconsistent with physical camera sensors.",
+      "hi": "समान शोर अवशिष्ट पैटर्न जो भौतिक कैमरा सेंसर के अनुरूप नहीं है।"
+    },
+    "no_camera_metadata": {
+      "en": "Absence of standard physical camera hardware EXIF tags.",
+      "hi": "मानक भौतिक कैमरा हार्डवेयर EXIF टैग अनुपस्थित हैं।"
+    },
+    "clip_ai_signal": {
+      "en": "Visual representation embedding aligns with synthetic generation cluster.",
+      "hi": "दृश्य प्रतिनिधित्व एम्बेडिंग सिंथेटिक क्लस्टर के साथ संरेखित है।"
+    },
+    "low_resolution": {
+      "en": "Image resolution too low for dependable feature extraction.",
+      "hi": "छवि रिज़ॉल्यूशन विश्वसनीय सुविधा निष्कर्षण के लिए बहुत कम है।"
+    },
+    "heavy_compression": {
+      "en": "Severe recompression artifacts hinder granular signal analysis.",
+      "hi": "गंभीर रीकम्प्रेशन कलाकृतियां सिग्नल विश्लेषण में बाधा डालती हैं।"
+    },
+    "signals_disagree": {
+      "en": "Conflicting model signals observed across detection lanes.",
+      "hi": "पहचान तंत्रों के बीच विरोधाभासी मॉडल संकेत देखे गए।"
+    },
+    "generator_tag_found": {
+      "en": "Software manifest or generator signature tag detected in file stream.",
+      "hi": "फ़ाइल स्ट्रीम में सॉफ़्टवेयर मैनिफ़ेस्ट या जनरेटर हस्ताक्षर टैग पाया गया।"
+    },
+    "diff_detected": {
+      "en": "Pixel and structural differences found against indexed original.",
+      "hi": "अनुक्रमित मूल के विरुद्ध पिक्सेल और संरचनात्मक अंतर पाए गए।"
+    },
+    "origin_match_exact": {
+      "en": "Exact perceptual fingerprint match with verified archive original.",
+      "hi": "सत्यापित संग्रह मूल के साथ सटीक अवधारणात्मक फिंगरप्रिंट मिलान।"
+    }
+  },
+  "ui": {
+    "app_title": "Trinetra: Digital Trust & Provenance",
+    "team": "Team Kinetix",
+    "theme": "Navyug - A New Era",
+    "eyes": {
+      "origin": {
+        "title": "Eye 1: Origin",
+        "found": "Indexed Source Found",
+        "none": "No Match in Index",
+        "inconclusive": "Inconclusive Search"
+      },
+      "change": {
+        "title": "Eye 2: Change",
+        "found": "Structural Edits Detected",
+        "none": "No Modifications",
+        "na": "N/A (No Baseline)"
+      },
+      "synthesis": {
+        "title": "Eye 3: Synthesis",
+        "confirmed": "AI Generated (Confirmed)",
+        "likely": "Likely AI-Generated",
+        "none": "No AI Signs Found",
+        "inconclusive": "Inconclusive"
+      }
+    }
+  },
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap here.",
+    "hi": "त्रिनेत्र फैक्ट-चेक इंडेक्स से मिलान किया गया। व्यापक वेब खोज के लिए, यहाँ टैप करें।"
+  }
+}

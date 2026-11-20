@@ -1,0 +1,46 @@
+{
+  "id": "pass_demo_original_001",
+  "verdict": "original",
+  "confidence_band": "high",
+  "reasons": [
+    {
+      "key": "origin_match_exact",
+      "en": "Matched indexed original image in Trinetra fact-check repository with no structural modifications.",
+      "hi": "त्रिनेत्र फैक्ट-चेक रिपॉजिटरी में बिना किसी संरचनात्मक बदलाव के मूल स्रोत छवि से मिलान हुआ।"
+    }
+  ],
+  "eyes": {
+    "origin": "found",
+    "change": "none",
+    "synthesis": "none"
+  },
+  "origin": {
+    "source": "Wikimedia Commons (Public Domain / CC)",
+    "date": "2021-08-15",
+    "factcheck_url": "https://commons.wikimedia.org/wiki/File:Demo_Monsoon_Flooding_Archive.jpg",
+    "claim_en": "DEMO DATA: Flooding archive photo from August 2021 news report",
+    "claim_hi": "डेमो डेटा: अगस्त 2021 की समाचार रिपोर्ट से बाढ़ संग्रह फोटो",
+    "thumb_url": "/files/thumb_demo_original.jpg"
+  },
+  "diff": null,
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": null,
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap here.",
+    "hi": "त्रिनेत्र फैक्ट-चेक इंडेक्स से मिलान किया गया। व्यापक वेब खोज के लिए, यहाँ टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/uploadbyurl?url=https%3A%2F%2Ftrinetra.kinetix.local%2Ffiles%2Fthumb_demo_original.jpg",
+    "tineye": "https://tineye.com/search?url=https%3A%2F%2Ftrinetra.kinetix.local%2Ffiles%2Fthumb_demo_original.jpg"
+  },
+  "lang": {
+    "en": "Original source image identified. No modifications detected.",
+    "hi": "मूल स्रोत छवि की पहचान की गई। कोई बदलाव नहीं पाया गया।"
+  },
+  "demo_data": true
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pass_demo_inconclusive_005",
+  "verdict": "inconclusive",
+  "confidence_band": "low",
+  "reasons": [
+    {
+      "key": "heavy_compression",
+      "en": "Heavy recompression and low resolution prevent reliable automated determination.",
+      "hi": "अत्यधिक रीकम्प्रेशन और कम रिज़ॉल्यूशन विश्वसनीय स्वचालित निर्णय को रोकते हैं।"
+    }
+  ],
+  "eyes": {
+    "origin": "inconclusive",
+    "change": "n/a",
+    "synthesis": "inconclusive"
+  },
+  "origin": null,
+  "diff": null,
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": null,
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap here.",
+    "hi": "त्रिनेत्र फैक्ट-चेक इंडेक्स से मिलान किया गया। व्यापक वेब खोज के लिए, यहाँ टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/",
+    "tineye": "https://tineye.com/"
+  },
+  "lang": {
+    "en": "Inconclusive: insufficient reliable signals to determine provenance.",
+    "hi": "अनिर्णायक: प्रामाणिकता निर्धारित करने के लिए अपर्याप्त संकेत।"
+  },
+  "demo_data": true
+}
