@@ -7,6 +7,11 @@ from fastapi import APIRouter
 from app.schemas import MatchHashRequest, MatchHashResponse
 from app.config import MOCK_MODE
 
+try:
+    from origin_match import match_origin
+except ImportError:
+    from backend.origin_match import match_origin
+
 router = APIRouter(tags=["Match Hash"])
 
 
@@ -19,7 +24,20 @@ async def match_hash(payload: MatchHashRequest):
     """
     phash = payload.phash.strip()
     
-    # In mock mode, if hash equals dummy known hash or starts with 'demo_', return match
+    # Check against real origin index using zero-vector CLIP (pure pHash lookup)
+    match = match_origin(phash, [0.0] * 512)
+    if match:
+        return MatchHashResponse(
+            matched=True,
+            origin_summary={
+                "source": match.get("source", "Trinetra Curated Index (DEMO DATA)"),
+                "date": match.get("date", "2023-01-01"),
+                "factcheck_url": match.get("factcheck_url", "https://commons.wikimedia.org/wiki/File:DEMO_Archive.jpg"),
+                "claim_short": match.get("claim_en", "DEMO DATA: Curated reference match")
+            }
+        )
+
+    # In mock mode fallback, if hash equals dummy known hash or starts with 'demo_', return match
     if MOCK_MODE:
         if phash.startswith("demo_") or phash in ("0000000000000000", "ffffffffffffffff"):
             return MatchHashResponse(
@@ -31,7 +49,5 @@ async def match_hash(payload: MatchHashRequest):
                     "claim_short": "DEMO DATA: Flooding archive photo from August 2021"
                 }
             )
-        return MatchHashResponse(matched=False, origin_summary=None)
 
-    # Real origin index matching will query SQLite index in milestone B2
     return MatchHashResponse(matched=False, origin_summary=None)

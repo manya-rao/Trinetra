@@ -27,3 +27,13 @@ def get_passport(passport_id: str) -> Optional[PassportResponse]:
         del _STORE[passport_id]
         return None
     return record["data"]
+
+
+def cleanup_expired() -> int:
+    """Removes all expired passport records from the cache. Returns count cleaned."""
+    now = time.time()
+    expired_ids = [pid for pid, rec in _STORE.items() if now > rec["expires_at"]]
+    for pid in expired_ids:
+        del _STORE[pid]
+    return len(expired_ids)
+

@@ -5,7 +5,7 @@
 * **Team:** Kinetix
 * **Event:** Code for Innovex '26
 * **Theme:** *Navyug - A New Era*
-* **Track:** Misinformation & Provenance ("check where a claim or image came from and whether it was changed.")
+* **Track:** Misinformation & Provenance ("check where a claim or image came from and whether it was changed")
 
 ---
 
@@ -125,7 +125,29 @@ Upload any image via `POST /analyze` with the target keyword in the file name to
 
 ---
 
-## 🔒 Privacy & Scope Guardrails
+## 🚀 Live Demo & Empirical Evaluation
+
+### 1. Run Live End-to-End Demo
+```bash
+python demo.py
+```
+Demonstrates all 3 confirmation lanes, privacy lookups, share card generation, and web passports.
+
+### 2. Run Empirical Evaluation Benchmark
+```bash
+python backend/scripts/evaluate.py
+```
+Measures true empirical pHash recall across variant types, false positive rate on unseen random images, and p50/p95 retrieval latencies. Verified results documented in [`docs/RESULTS.md`](docs/RESULTS.md).
+
+---
+
+## 🤖 Clients & Integrations
+
+- **Telegram Verification Bot:** [`bot/`](bot/) - Lightweight, async bot supporting forwarded photos and share card generation. See [`bot/README.md`](bot/README.md).
+- **Browser Extension (Manifest V3):** [`extension/`](extension/) - One-click right-click image verification on any webpage or WhatsApp Web. See [`extension/README.md`](extension/README.md).
+- **iOS Shortcut:** [`docs/IOS_SHORTCUT.md`](docs/IOS_SHORTCUT.md) - Share sheet integration recipe for iPhone and iPad.
+- **Production Deployment Guide:** [`docs/DEPLOY.md`](docs/DEPLOY.md) - Docker containerization and cloud instructions.
+
 * **Ephemeral Processing:** Uploaded source images are deleted after processing; only derived heatmaps and metadata needed for the passport are cached temporarily (1-hour TTL).
 * **Search Scope Transparency:** Searches match against the local curated index. External third-party lookups (Lens / TinEye) require explicit user consent (`consent_external=true`).
 * **Zero Chat Auto-Scanning:** No automated scraping or tracking of private communications. Opt-in hash lookup (`POST /match_hash`) transmits perceptual hashes only.

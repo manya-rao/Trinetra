@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Trinetra: Provenance & Digital Trust",
+  "version": "1.0.0",
+  "description": "Right-click or drop any image to verify its origin, structural changes, and synthetic generation via Trinetra.",
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "http://127.0.0.1:8000/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Trinetra Provenance Passport"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

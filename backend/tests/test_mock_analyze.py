@@ -135,3 +135,90 @@ def test_match_hash_endpoint():
 def test_static_files_serving():
     res = client.get("/files/thumb_demo_original.jpg")
     assert res.status_code == 200
+
+
+def test_analyze_e2e_not_in_index():
+    """(i) Image NOT in index -> AI lane result with origin=null and eyes.origin='none'."""
+    buf = io.BytesIO()
+    # Random pattern distinct from index
+    img = Image.new("RGB", (320, 240), color=(34, 198, 221))
+    img.save(buf, format="JPEG")
+    res = client.post(
+        "/analyze",
+        files={"image": ("unseen_web_photo_xyz.jpg", buf.getvalue(), "image/jpeg")}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["origin"] is None
+    assert data["eyes"]["origin"] == "none"
+    assert data["eyes"]["synthesis"] in ("inconclusive", "likely", "none")
+    # Clarification: reasons state image has no known origin in index
+    reason_keys = [r["key"] for r in data["reasons"]]
+    assert "no_origin_match" in reason_keys
+
+
+def test_analyze_e2e_in_index_recompressed():
+    """(ii) Image IN index (recompressed/screenshotted) -> origin lane."""
+    from pathlib import Path
+    demo_ref = Path(__file__).resolve().parents[1] / "data" / "demo_images" / "demo_ref_001.jpg"
+    assert demo_ref.is_file(), "Demo reference image demo_ref_001.jpg must exist"
+    
+    img = Image.open(demo_ref).convert("RGB")
+    buf = io.BytesIO()
+    # Recompress slightly
+    img.save(buf, format="JPEG", quality=75)
+    
+    res = client.post(
+        "/analyze",
+        files={"image": ("recompressed_query_from_chat.jpg", buf.getvalue(), "image/jpeg")}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["origin"] is not None
+    assert data["eyes"]["origin"] == "found"
+    assert "DEMO DATA" in data["origin"]["claim_en"]
+    assert data["verdict"] in ("original", "modified")
+
+
+def test_analyze_e2e_c2pa_ai_proof():
+    """(iii) Image with C2PA AI proof -> ai_confirmed."""
+    buf = io.BytesIO()
+    img = Image.new("RGB", (200, 200), color=(90, 80, 110))
+    img.save(buf, format="JPEG")
+    res = client.post(
+        "/analyze",
+        files={"image": ("provenance_signed_ai_confirmed_c2pa.jpg", buf.getvalue(), "image/jpeg")}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["verdict"] == "ai_confirmed"
+    assert data["eyes"]["synthesis"] == "confirmed"
+    assert data["c2pa"]["status"] == "valid"
+    assert data["c2pa"]["ai_generated"] is True
+
+
+def test_analyze_empty_or_missing_index_fallback():
+    """Requirement 5: Index works when EMPTY or missing; every image goes to AI lane."""
+    import backend.origin_match as om
+    from pathlib import Path
+    
+    orig_db = om.INDEX_DB
+    try:
+        # Point to a non-existent sqlite db file
+        om.INDEX_DB = Path("non_existent_empty_index.sqlite")
+        buf = io.BytesIO()
+        img = Image.new("RGB", (150, 150), color=(10, 20, 30))
+        img.save(buf, format="JPEG")
+        res = client.post(
+            "/analyze",
+            files={"image": ("standalone_test_image.jpg", buf.getvalue(), "image/jpeg")}
+        )
+        assert res.status_code == 200
+        data = res.json()
+        assert data["origin"] is None
+        assert data["eyes"]["origin"] == "none"
+        assert data["eyes"]["synthesis"] in ("inconclusive", "likely", "none")
+    finally:
+        om.INDEX_DB = orig_db
+
+
