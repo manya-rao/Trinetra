@@ -68,3 +68,10 @@ desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Trinetra ml and frontend
+ml/data/raw/
+ml/data/cache/
+frontend/node_modules/
+frontend/node_modules/
+.env
