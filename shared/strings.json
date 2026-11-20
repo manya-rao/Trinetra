@@ -1,0 +1,351 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "project": "Trinetra",
+    "note": "Shared localization strings. Device A owns, Device B only reads. Hindi strings need native-speaker review. Percentages are strictly forbidden."
+  },
+  "verdicts": {
+    "original": {
+      "headline": {
+        "en": "Original Image",
+        "hi": "मूल छवि (ओरिजिनल)"
+      },
+      "detail": {
+        "en": "Matched to earliest verified source with no alterations found.",
+        "hi": "सत्यापित स्रोत से मिलान हुआ, कोई बदलाव नहीं पाया गया।"
+      },
+      "color": "green",
+      "icon": "shield-check"
+    },
+    "modified": {
+      "headline": {
+        "en": "Modified Image",
+        "hi": "संशोधित छवि"
+      },
+      "detail": {
+        "en": "Matches an existing source image, but regions have been edited, replaced, or spliced.",
+        "hi": "मौजूदा मूल छवि से मेल खाती है, लेकिन कुछ हिस्सों को बदला या संपादित किया गया है।"
+      },
+      "color": "amber",
+      "icon": "scissors"
+    },
+    "out_of_context": {
+      "headline": {
+        "en": "Out of Context / Recycled",
+        "hi": "गलत संदर्भ में प्रस्तुत"
+      },
+      "detail": {
+        "en": "Authentic original image repurposed with an unrelated or misleading claim.",
+        "hi": "वास्तविक पुरानी तस्वीर को भ्रामक या असंबद्ध दावे के साथ पुनः प्रस्तुत किया गया है।"
+      },
+      "color": "amber",
+      "icon": "clock-rewind"
+    },
+    "ai_confirmed": {
+      "headline": {
+        "en": "AI-Generated (Confirmed)",
+        "hi": "एआई-निर्मित (पुष्ट)"
+      },
+      "detail": {
+        "en": "Cryptographically signed C2PA manifest or verified cryptographic generator watermark detected.",
+        "hi": "क्रिप्टोग्राफ़िक रूप से हस्ताक्षरित C2PA घोषणापत्र या प्रमाणित एआई वॉटरमार्क पाया गया।"
+      },
+      "color": "red",
+      "icon": "cpu-alert"
+    },
+    "likely_ai": {
+      "headline": {
+        "en": "Likely AI-Generated",
+        "hi": "संभावित एआई-निर्मित"
+      },
+      "detail": {
+        "en": "Multiple synthetic visual, frequency, and structural synthesis signals align.",
+        "hi": "एकाधिक कृत्रिम संरचनात्मक, आवृत्ति और दृश्य संकेत मेल खाते हैं।"
+      },
+      "color": "orange",
+      "icon": "sparkles"
+    },
+    "likely_real_looking": {
+      "headline": {
+        "en": "No AI Signs Found (Not Proof)",
+        "hi": "कोई एआई संकेत नहीं (प्रमाण नहीं)"
+      },
+      "detail": {
+        "en": "Visual and sensor artifacts appear consistent with camera capture. Not definitive proof of authenticity.",
+        "hi": "छवि के लक्षण प्राकृतिक कैमरे के समान हैं। यह पूर्ण प्रामाणिकता का अचूक प्रमाण नहीं है।"
+      },
+      "color": "teal",
+      "icon": "camera"
+    },
+    "inconclusive": {
+      "headline": {
+        "en": "Inconclusive",
+        "hi": "अनिर्णायक"
+      },
+      "detail": {
+        "en": "Signals are conflicting, resolution is too low, or heavy compression prevents reliable classification.",
+        "hi": "संकेत परस्पर विरोधी हैं, या अत्यधिक कम्प्रेशन के कारण स्पष्ट निष्कर्ष संभव नहीं है।"
+      },
+      "color": "grey-blue",
+      "icon": "help-circle"
+    }
+  },
+  "confidence_bands": {
+    "high": {
+      "en": "High Confidence",
+      "hi": "उच्च विश्वसनीयता"
+    },
+    "medium": {
+      "en": "Moderate Confidence",
+      "hi": "मध्यम विश्वसनीयता"
+    },
+    "low": {
+      "en": "Low Confidence",
+      "hi": "निम्न विश्वसनीयता"
+    },
+    "n/a": {
+      "en": "Not Applicable",
+      "hi": "लागू नहीं"
+    }
+  },
+  "reasons": {
+    "spectrum_peaks": {
+      "en": "Periodic frequency peaks characteristic of generative upsampling filters.",
+      "hi": "आवृत्ति स्पेक्ट्रम में एआई अपसैंपलिंग से जुड़े आवधिक शिखर पाए गए।"
+    },
+    "noise_uniform": {
+      "en": "Synthetic noise pattern inconsistent with natural camera sensor ISO distribution.",
+      "hi": "छवि का नॉइज़ पैटर्न प्राकृतिक कैमरा सेंसर से मेल नहीं खाता।"
+    },
+    "no_camera_metadata": {
+      "en": "Standard camera EXIF metadata absent or stripped.",
+      "hi": "मानक कैमरा EXIF मेटाडेटा अनुपस्थित या हटा दिया गया है।"
+    },
+    "clip_ai_signal": {
+      "en": "Semantic visual features strongly match synthetic image distribution manifolds.",
+      "hi": "दृश्य विशेषताएं कृत्रिम एआई छवियों के पैटर्न से मेल खाती हैं।"
+    },
+    "low_resolution": {
+      "en": "Image resolution below minimum threshold for reliable synthesis analysis.",
+      "hi": "छवि का आकार सटीक विश्लेषण हेतु न्यूनतम सीमा से कम है।"
+    },
+    "heavy_compression": {
+      "en": "Severe compression artifacts mask fine-grained forensic indicators.",
+      "hi": "अत्यधिक कम्प्रेशन के कारण सूक्ष्म फॉरेन्सिक संकेत अस्पष्ट हैं।"
+    },
+    "signals_disagree": {
+      "en": "Semantic and forensic indicators show contradictory evidence.",
+      "hi": "दृश्य अर्थ और तकनीकी फॉरेन्सिक संकेत आपस में मेल नहीं खा रहे हैं।"
+    },
+    "generator_tag_found": {
+      "en": "Metadata contains unverified AI generator tag or software signature.",
+      "hi": "मेटाडेटा में असंपादित एआई जनरेटर टैग या सॉफ्टवेयर हस्ताक्षर पाया गया।"
+    }
+  },
+  "eyes": {
+    "eye1": {
+      "name": {
+        "en": "Eye 1: Origin",
+        "hi": "प्रथम नेत्र: उत्पत्ति (Origin)"
+      },
+      "subtitle": {
+        "en": "Known image & source verification",
+        "hi": "ज्ञात छवि एवं स्रोत सत्यापन"
+      },
+      "status": {
+        "found": {
+          "en": "Source Found",
+          "hi": "स्रोत मिल गया"
+        },
+        "none": {
+          "en": "No Prior Match",
+          "hi": "कोई पूर्व मिलान नहीं"
+        },
+        "inconclusive": {
+          "en": "Origin Unclear",
+          "hi": "उत्पत्ति अस्पष्ट"
+        }
+      }
+    },
+    "eye2": {
+      "name": {
+        "en": "Eye 2: Change",
+        "hi": "द्वितीय नेत्र: परिवर्तन (Change)"
+      },
+      "subtitle": {
+        "en": "Pixel-level alignment & diff",
+        "hi": "पिक्सेल-स्तरीय मिलान एवं तुलना"
+      },
+      "status": {
+        "found": {
+          "en": "Edits Detected",
+          "hi": "बदलाव पाए गए"
+        },
+        "none": {
+          "en": "No Edits Found",
+          "hi": "कोई बदलाव नहीं"
+        },
+        "n/a": {
+          "en": "Not Applicable",
+          "hi": "लागू नहीं"
+        }
+      }
+    },
+    "eye3": {
+      "name": {
+        "en": "Eye 3: Synthesis",
+        "hi": "तृतीय नेत्र: संश्लेषण (Synthesis)"
+      },
+      "subtitle": {
+        "en": "AI generation forensic signals",
+        "hi": "एआई जनरेशन फॉरेन्सिक संकेत"
+      },
+      "status": {
+        "confirmed": {
+          "en": "AI Confirmed",
+          "hi": "एआई पुष्ट"
+        },
+        "likely": {
+          "en": "Likely AI",
+          "hi": "संभावित एआई"
+        },
+        "none": {
+          "en": "No AI Signs",
+          "hi": "कोई एआई संकेत नहीं"
+        },
+        "inconclusive": {
+          "en": "Inconclusive",
+          "hi": "अनिर्णायक"
+        }
+      }
+    }
+  },
+  "ui": {
+    "app_title": "Trinetra",
+    "app_tagline": {
+      "en": "Provenance Passport in seconds: origin, changes, and AI detection.",
+      "hi": "क्षणों में प्रामाणिकता पासपोर्ट: उत्पत्ति, बदलाव और एआई पहचान।"
+    },
+    "team_name": "Kinetix",
+    "event_theme": "Code for Innovex '26 — Navyug: A New Era",
+    "demo_badge": "DEMO DATA",
+    "drop_zone_title": {
+      "en": "Drop suspicious image here",
+      "hi": "जांच हेतु छवि यहाँ छोड़ें"
+    },
+    "drop_zone_sub": {
+      "en": "or click to browse from device / camera roll",
+      "hi": "या डिवाइस/कैमरा से चुनने के लिए क्लिक करें"
+    },
+    "paste_hint": {
+      "en": "Tip: You can also paste an image directly (Ctrl+V)",
+      "hi": "सुझाव: आप छवि को सीधे पेस्ट भी कर सकते हैं (Ctrl+V)"
+    },
+    "share_whatsapp_hint": {
+      "en": "Share from WhatsApp: tap Share on any image and choose Trinetra",
+      "hi": "व्हाट्सएप से साझा करें: किसी भी छवि पर शेयर दबाएं और त्रिनेत्र चुनें"
+    },
+    "privacy_hash_only": {
+      "en": "Hash-Only Mode (Zero image content leaves device if known)",
+      "hi": "केवल-हैश मोड (ज्ञात होने पर छवि डिवाइस से बाहर नहीं जाएगी)"
+    },
+    "privacy_disclaimer": {
+      "en": "Privacy guarantee: Images are held in temporary memory for analysis only and never stored or logged.",
+      "hi": "गोपनीयता प्रतिज्ञा: छवियां केवल क्षणिक विश्लेषण हेतु प्रोसेस होती हैं, कभी स्टोर नहीं की जातीं।"
+    },
+    "analyzing_title": {
+      "en": "Examining Image Across Three Eyes...",
+      "hi": "तीनों नेत्रों द्वारा छवि का विश्लेषण जारी..."
+    },
+    "analyzing_eye1": {
+      "en": "Eye 1: Querying origin & fact-check archives...",
+      "hi": "प्रथम नेत्र: उत्पत्ति एवं तथ्य-जांच अभिलेखागार में खोज..."
+    },
+    "analyzing_eye2": {
+      "en": "Eye 2: Computing pixel alignment and differential diff...",
+      "hi": "द्वितीय नेत्र: पिक्सेल मिलान और अंतर विश्लेषण..."
+    },
+    "analyzing_eye3": {
+      "en": "Eye 3: Evaluating frequency, noise, and semantic synthesis...",
+      "hi": "तृतीय नेत्र: आवृत्ति, नॉइज़ और विज़ुअल संश्लेषण का आकलन..."
+    },
+    "button_analyze": {
+      "en": "Generate Passport",
+      "hi": "पासपोर्ट बनाएं"
+    },
+    "button_share_card": {
+      "en": "Share Passport Card",
+      "hi": "पासपोर्ट कार्ड साझा करें"
+    },
+    "button_copy_summary": {
+      "en": "Copy Summary",
+      "hi": "सारांश कॉपी करें"
+    },
+    "button_copied": {
+      "en": "Copied to Clipboard!",
+      "hi": "कॉपी हो गया!"
+    },
+    "button_new_scan": {
+      "en": "Analyze Another Image",
+      "hi": "अन्य छवि जांचें"
+    },
+    "tab_comparison": {
+      "en": "Original vs Modified Comparison",
+      "hi": "मूल बनाम संशोधित तुलना"
+    },
+    "toggle_heatmap": {
+      "en": "Show Edit Heatmap",
+      "hi": "एडिट हीटमैप दिखाएं"
+    },
+    "suspicious_regions_label": {
+      "en": "Suspicious regions, not proof",
+      "hi": "संभावित संदेहास्पद क्षेत्र (पूर्ण प्रमाण नहीं)"
+    },
+    "scope_note_heading": {
+      "en": "Verification Scope",
+      "hi": "सत्यापन का दायरा"
+    },
+    "scope_note": {
+      "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
+      "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+    },
+    "external_search_button": {
+      "en": "Search Wider Web (Google Lens / TinEye)",
+      "hi": "व्यापक वेब खोज (गूगल लेंस / टिनआई)"
+    },
+    "consent_modal_title": {
+      "en": "Consent for External Search",
+      "hi": "बाहरी खोज हेतु सहमति"
+    },
+    "consent_modal_body": {
+      "en": "You are about to query third-party search engines (Google Lens / TinEye). This will submit image visual data to an external provider under their terms.",
+      "hi": "आप तृतीय-पक्ष सर्च इंजन (Google Lens / TinEye) पर खोज करने जा रहे हैं। इससे छवि डेटा उनकी शर्तों के तहत बाहरी सर्वर पर भेजा जाएगा।"
+    },
+    "button_proceed": {
+      "en": "I Consent, Search External",
+      "hi": "सहमति है, खोजें"
+    },
+    "button_cancel": {
+      "en": "Cancel",
+      "hi": "रद्द करें"
+    },
+    "errors": {
+      "network": {
+        "en": "Unable to connect to Trinetra backend service. Please check connection.",
+        "hi": "त्रिनेत्र सेवा से संपर्क नहीं हो सका। कृपया नेटवर्क जांचें।"
+      },
+      "invalid_file": {
+        "en": "Please provide a valid image file (JPEG, PNG, WebP).",
+        "hi": "कृपया एक मान्य छवि फ़ाइल (JPEG, PNG, WebP) अपलोड करें।"
+      },
+      "image_too_small": {
+        "en": "Image resolution is too low (minimum 256x256 px required).",
+        "hi": "छवि का आकार बहुत छोटा है (न्यूनतम 256x256 पिक्सेल आवश्यक)।"
+      },
+      "image_too_large": {
+        "en": "Image file size exceeds maximum limit (20MB).",
+        "hi": "फ़ाइल का आकार सीमा (20MB) से अधिक है।"
+      }
+    }
+  }
+}
