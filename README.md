@@ -5,7 +5,7 @@
 * **Team:** Kinetix
 * **Event:** Code for Innovex '26
 * **Theme:** *Navyug - A New Era*
-* **Track:** Misinformation & Provenance ("check where a claim or image came from and whether it was changed")
+* **Track:** Misinformation & Provenance ("check where a claim or image came from and whether it was changed.")
 
 ---
 
