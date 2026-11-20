@@ -31,17 +31,17 @@ Most viral misinformation consists of authentic images taken out of context (rec
 
 ```
 trinetra/
-├── ml/                      # [Device A] AI detector training & inference (ml.predict)
-├── frontend/                # [Device A] React PWA
+├── ml/                      # [Device 1] AI detector training & inference (ml.predict)
+├── frontend/                # [Device 1] React PWA
 ├── shared/
-│   ├── strings.json         # [Device A] Multilingual strings (EN / HI)
-│   └── fixtures/            # [Device B] Frozen mock Passport JSON fixtures
+│   ├── strings.json         # [Device 1] Multilingual strings (EN / HI)
+│   └── fixtures/            # [Device 2] Frozen mock Passport JSON fixtures
 │       ├── original.json
 │       ├── modified.json
 │       ├── ai_confirmed.json
 │       ├── likely_ai.json
 │       └── inconclusive.json
-├── backend/                 # [Device B] FastAPI service, Origin engine, Diff, C2PA, Aggregator
+├── backend/                 # [Device 2] FastAPI service, Origin engine, Diff, C2PA, Aggregator
 │   ├── app/
 │   │   ├── main.py          # FastAPI application entrypoint & CORS
 │   │   ├── config.py        # Config & CV thresholds
@@ -58,14 +58,14 @@ trinetra/
 │   ├── tests/               # Pytest suite
 │   ├── requirements.txt     # Python dependencies
 │   └── run.py               # Local runner
-├── bot/                     # [Device B] Telegram verification bot
-├── extension/               # [Device B] WhatsApp Web browser extension (Manifest V3)
-└── docs/                    # [Device B] DEPLOY.md, IOS_SHORTCUT.md, RESULTS.md
+├── bot/                     # [Device 2] Telegram verification bot
+├── extension/               # [Device 2] WhatsApp Web browser extension (Manifest V3)
+└── docs/                    # [Device 2] DEPLOY.md, IOS_SHORTCUT.md, RESULTS.md
 ```
 
 ---
 
-## 🚀 Quickstart: Device B Backend (FastAPI)
+## 🚀 Quickstart: Device 2 Backend (FastAPI)
 
 ### 1. Requirements
 * Python 3.11+
@@ -99,7 +99,7 @@ pytest tests/ -v
 
 ---
 
-## 📡 Backend Endpoints (Device B API Contract)
+## 📡 Backend Endpoints (Device 2 API Contract)
 
 | Method | Endpoint | Description |
 |---|---|---|
