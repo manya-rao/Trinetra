@@ -1,0 +1,44 @@
+{
+  "id": "pass_inc_007",
+  "verdict": "inconclusive",
+  "confidence_band": "n/a",
+  "reasons": [
+    {
+      "key": "signals_disagree",
+      "en": "Semantic and forensic indicators show contradictory evidence.",
+      "hi": "दृश्य अर्थ और तकनीकी फॉरेन्सिक संकेत आपस में मेल नहीं खा रहे हैं।"
+    },
+    {
+      "key": "heavy_compression",
+      "en": "Severe compression artifacts mask fine-grained forensic indicators.",
+      "hi": "अत्यधिक कम्प्रेशन के कारण सूक्ष्म फॉरेन्सिक संकेत अस्पष्ट हैं।"
+    }
+  ],
+  "eyes": {
+    "origin": "inconclusive",
+    "change": "n/a",
+    "synthesis": "inconclusive"
+  },
+  "origin": null,
+  "diff": null,
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": null,
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
+    "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/uploadbyurl?url=https://picsum.photos/seed/inc1/400/300",
+    "tineye": "https://tineye.com/search?url=https://picsum.photos/seed/inc1/400/300"
+  },
+  "lang": {
+    "en": "Inconclusive: signals are conflicting or compression is too severe for reliable classification.",
+    "hi": "अनिर्णायक: परस्पर विरोधी संकेतों या अत्यधिक कम्प्रेशन के कारण कोई निश्चित निष्कर्ष संभव नहीं।"
+  },
+  "demo_data": true
+}

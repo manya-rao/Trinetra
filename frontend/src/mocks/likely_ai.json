@@ -1,0 +1,49 @@
+{
+  "id": "pass_lai_005",
+  "verdict": "likely_ai",
+  "confidence_band": "high",
+  "reasons": [
+    {
+      "key": "spectrum_peaks",
+      "en": "Periodic frequency peaks characteristic of generative upsampling filters.",
+      "hi": "आवृत्ति स्पेक्ट्रम में एआई अपसैंपलिंग से जुड़े आवधिक शिखर पाए गए।"
+    },
+    {
+      "key": "noise_uniform",
+      "en": "Synthetic noise pattern inconsistent with natural camera sensor ISO distribution.",
+      "hi": "छवि का नॉइज़ पैटर्न प्राकृतिक कैमरा सेंसर से मेल नहीं खाता।"
+    },
+    {
+      "key": "clip_ai_signal",
+      "en": "Semantic visual features strongly match synthetic image distribution manifolds.",
+      "hi": "दृश्य विशेषताएं कृत्रिम एआई छवियों के पैटर्न से मेल खाती हैं।"
+    }
+  ],
+  "eyes": {
+    "origin": "none",
+    "change": "n/a",
+    "synthesis": "likely"
+  },
+  "origin": null,
+  "diff": null,
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": "https://picsum.photos/seed/suspicious_heat/400/300",
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
+    "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/uploadbyurl?url=https://picsum.photos/seed/suspicious_heat/400/300",
+    "tineye": "https://tineye.com/search?url=https://picsum.photos/seed/suspicious_heat/400/300"
+  },
+  "lang": {
+    "en": "Likely AI-generated based on consistent multimodal frequency, noise, and semantic indicators.",
+    "hi": "आवृत्ति, नॉइज़ और विज़ुअल संकेतों के आधार पर संभावित एआई-निर्मित छवि।"
+  },
+  "demo_data": true
+}

@@ -1,0 +1,46 @@
+{
+  "id": "pass_ooc_003",
+  "verdict": "out_of_context",
+  "confidence_band": "high",
+  "reasons": [
+    {
+      "key": "no_camera_metadata",
+      "en": "Exact image was published 5 years prior in a different geographic jurisdiction.",
+      "hi": "सटीक छवि 5 वर्ष पूर्व एक भिन्न भौगोलिक स्थान से प्रकाशित हुई थी।"
+    }
+  ],
+  "eyes": {
+    "origin": "found",
+    "change": "none",
+    "synthesis": "none"
+  },
+  "origin": {
+    "source": "Boom Live / AFP Fact Check",
+    "date": "2019-08-12",
+    "factcheck_url": "https://boomlive.in",
+    "claim_en": "Old photo of natural flooding recycled as recent dam breach incident.",
+    "claim_hi": "पुरानी प्राकृतिक बाढ़ की तस्वीर को हालिया बांध टूटने की घटना बताकर शेयर किया गया।",
+    "thumb_url": "https://picsum.photos/seed/flood_orig/400/300"
+  },
+  "diff": null,
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": null,
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
+    "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/uploadbyurl?url=https://picsum.photos/seed/flood_orig/400/300",
+    "tineye": "https://tineye.com/search?url=https://picsum.photos/seed/flood_orig/400/300"
+  },
+  "lang": {
+    "en": "Authentic photograph recycled out of context with a misleading narrative.",
+    "hi": "वास्तविक तस्वीर को भ्रामक संदर्भ के साथ गलत तरीके से पुनः प्रस्तुत किया गया।"
+  },
+  "demo_data": true
+}

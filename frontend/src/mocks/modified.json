@@ -1,0 +1,52 @@
+{
+  "id": "pass_mod_002",
+  "verdict": "modified",
+  "confidence_band": "high",
+  "reasons": [
+    {
+      "key": "spectrum_peaks",
+      "en": "Sub-pixel differential analysis detected spliced foreground object not present in archive original.",
+      "hi": "उप-पिक्सेल अंतर विश्लेषण में अग्रभूमि में जोड़ी गई वस्तु पाई गई जो मूल तस्वीर में नहीं थी।"
+    }
+  ],
+  "eyes": {
+    "origin": "found",
+    "change": "found",
+    "synthesis": "none"
+  },
+  "origin": {
+    "source": "Reuters Fact Check Bureau",
+    "date": "2023-11-04",
+    "factcheck_url": "https://reuters.com/fact-check",
+    "claim_en": "Viral image claimed explosion at downtown landmark; actual original shows routine city skyline.",
+    "claim_hi": "वायरल तस्वीर में शहर में विस्फोट का दावा किया गया; मूल तस्वीर सामान्य शहर को दर्शाती है।",
+    "thumb_url": "https://picsum.photos/seed/mod_orig/400/300"
+  },
+  "diff": {
+    "heatmap_url": "https://picsum.photos/seed/diff_heat/400/300",
+    "aligned_url": "https://picsum.photos/seed/diff_align/400/300",
+    "changed_regions": [
+      { "x": 120, "y": 80, "w": 140, "h": 90 }
+    ]
+  },
+  "c2pa": {
+    "status": "none",
+    "issuer": null,
+    "ai_generated": false,
+    "history": []
+  },
+  "suspicious_regions_url": "https://picsum.photos/seed/diff_heat/400/300",
+  "scope_note": {
+    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
+    "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+  },
+  "external_search": {
+    "lens": "https://lens.google.com/uploadbyurl?url=https://picsum.photos/seed/diff_heat/400/300",
+    "tineye": "https://tineye.com/search?url=https://picsum.photos/seed/diff_heat/400/300"
+  },
+  "lang": {
+    "en": "Image was digitally altered: manipulated regions highlighted in the diff comparison.",
+    "hi": "छवि को डिजिटल रूप से बदला गया है: अंतर तुलना में बदले गए क्षेत्र चिह्नित हैं।"
+  },
+  "demo_data": true
+}
