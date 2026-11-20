@@ -1,0 +1,14 @@
+torch
+torchvision
+open-clip-torch
+scikit-learn
+scipy
+numpy
+pillow
+joblib
+pytest
+requests
+tqdm
+huggingface_hub
+datasets
+piexif
