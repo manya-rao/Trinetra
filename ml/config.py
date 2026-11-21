@@ -44,6 +44,17 @@ NOISE_FEATURE_DIM = 36       # 8x8 stats + global kurtosis/std + ELA variance
 
 # Reason keys frozen contract
 VALID_REASONS = {
+    "origin_match_exact",
+    "origin_match_near",
+    "diff_detected",
+    "no_origin_match",
+    "c2pa_valid",
+    "c2pa_invalid",
+    "ai_band_likely",
+    "ai_band_inconclusive",
+    "gate_triggered",
+    "out_of_context",
+    "no_ai_signs_found",
     "spectrum_peaks",
     "noise_uniform",
     "no_camera_metadata",

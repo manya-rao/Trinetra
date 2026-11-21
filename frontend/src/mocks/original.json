@@ -4,9 +4,9 @@
   "confidence_band": "high",
   "reasons": [
     {
-      "key": "no_camera_metadata",
-      "en": "Authentic camera EXIF sensor profile verified across trusted news agency archives.",
-      "hi": "सत्यापित समाचार एजेंसी अभिलेखागार में मूल कैमरा EXIF प्रोफ़ाइल की पुष्टि हुई।"
+      "key": "origin_match_exact",
+      "en": "Exact visual match found in the Trinetra fact-check index.",
+      "hi": "त्रिनेत्र फैक्ट-चेक इंडेक्स में सटीक दृश्य मिलान पाया गया।"
     }
   ],
   "eyes": {
@@ -24,25 +24,23 @@
   },
   "diff": null,
   "c2pa": {
-    "status": "valid",
-    "issuer": "Sony Camera Cryptographic Authenticity",
+    "status": "none",
+    "issuer": null,
     "ai_generated": false,
-    "history": [
-      { "action": "created", "software": "Sony Alpha 7 IV Hardware Signer" }
-    ]
+    "history": []
   },
   "suspicious_regions_url": null,
   "scope_note": {
-    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
-    "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+    "en": "Matched against the Trinetra index. For a wider web search, tap below.",
+    "hi": "त्रिनेत्र इंडेक्स से मिलान किया गया। व्यापक खोज के लिए नीचे टैप करें।"
   },
   "external_search": {
     "lens": "https://lens.google.com/uploadbyurl?url=https://picsum.photos/seed/orig1/400/300",
     "tineye": "https://tineye.com/search?url=https://picsum.photos/seed/orig1/400/300"
   },
   "lang": {
-    "en": "Original authentic photograph matched to verified archives with intact provenance.",
-    "hi": "सत्यापित अभिलेखागार से मिलान हुई प्रामाणिक मूल तस्वीर, कोई बदलाव नहीं।"
+    "en": "Known image: matches an indexed reference",
+    "hi": "ज्ञात छवि: इंडेक्स संदर्भ से मेल खाती है"
   },
   "demo_data": true
 }

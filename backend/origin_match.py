@@ -6,11 +6,13 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 
 # Optional FAISS import – fallback stub
-try:
-    import faiss
-    _faiss_available = True
-except Exception:
-    _faiss_available = False
+_faiss_available = False
+if os.getenv("FAISS_ENABLE", "0") == "1":
+    try:
+        import faiss
+        _faiss_available = True
+    except Exception:
+        _faiss_available = False
 
 BASE_DIR = Path(__file__).resolve().parent  # backend/
 INDEX_DB = BASE_DIR / "data" / "index.sqlite"

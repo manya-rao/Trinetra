@@ -80,10 +80,13 @@ class TestVariantsRecallAndC2PA(unittest.TestCase):
         self.assertFalse(c2pa_norm["ai_generated"])
 
         # 2. C2PA confirmed image -> status valid, ai_generated True
-        c2pa_ai = check_c2pa("c2pa_ai_confirmed_test.jpg")
+        from backend.tests.test_c2pa import create_c2pa_signed_test_image
+        signed_bytes = create_c2pa_signed_test_image(tamper=False)
+        c2pa_ai = check_c2pa(signed_bytes)
         self.assertEqual(c2pa_ai["status"], "valid")
         self.assertTrue(c2pa_ai["ai_generated"])
 
         # 3. Invalid / tampered -> status invalid
-        c2pa_inv = check_c2pa("invalid_c2pa_tampered.jpg")
+        tampered_bytes = create_c2pa_signed_test_image(tamper=True)
+        c2pa_inv = check_c2pa(tampered_bytes)
         self.assertEqual(c2pa_inv["status"], "invalid")

@@ -41,10 +41,31 @@ def get_model_bundle():
             _MODEL_BUNDLE = None
     return _MODEL_BUNDLE
 
+def extract_jpeg_quality(image: Image.Image) -> Optional[float]:
+    """Compute JPEG quality directly from quantization tables; None for PNG/lossless."""
+    fmt = getattr(image, "format", None)
+    if fmt == "PNG" or getattr(image, "mode", "") == "RGBA":
+        return None
+    qt = getattr(image, "quantization", None)
+    if qt and 0 in qt:
+        try:
+            val = qt[0][0]
+            if val <= 1:
+                return 100.0
+            elif val >= 16:
+                return float(np.clip(round(800.0 / val), 1, 50))
+            else:
+                return float(np.clip(round((200.0 - (val / 0.16)) / 2.0), 51, 99))
+        except Exception:
+            return None
+    return None
+
+
 def predict(image: Image.Image, meta: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """
     Inference entrypoint for Eye 3 (Synthesis Detector).
     Matches frozen shared contract.
+    Computes jpeg_quality itself from quantization tables, falling back to meta.
     """
     if meta is None:
         meta = {}
@@ -52,7 +73,14 @@ def predict(image: Image.Image, meta: Optional[Dict[str, Any]] = None) -> Dict[s
     w, h = image.size
     meta_width = meta.get("width", w)
     meta_height = meta.get("height", h)
-    jpeg_quality = meta.get("jpeg_quality")
+    
+    # Compute jpeg_quality from quantization tables directly, with meta as fallback
+    computed_q = extract_jpeg_quality(image)
+    if computed_q is not None:
+        jpeg_quality = computed_q
+    else:
+        jpeg_quality = meta.get("jpeg_quality")
+
     has_exif = meta.get("has_exif", True)
     generator_tag = meta.get("generator_tag")
 

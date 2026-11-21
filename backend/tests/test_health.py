@@ -16,6 +16,8 @@ def test_health_endpoint():
     assert data["service"] == "trinetra-backend"
     assert "version" in data
     assert "mock_mode" in data
+    assert "ml_available" in data
+    assert isinstance(data["ml_available"], bool)
 
 
 def test_root_endpoint():

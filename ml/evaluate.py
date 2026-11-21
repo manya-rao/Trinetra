@@ -151,10 +151,34 @@ def run_degradation_evaluation(paths, real_indices, sample_size=40):
     return results
 
 
+def wilson_interval(k: int, n: int, confidence: float = 0.95) -> str:
+    """Compute Wilson score 95% confidence interval for a proportion k/n."""
+    if n == 0:
+        return "[0.00%, 0.00%]"
+    import math
+    z = 1.95996  # 95% normal quantile
+    p = k / n
+    denom = 1.0 + z**2 / n
+    center = (p + z**2 / (2.0 * n)) / denom
+    half = (z * math.sqrt((p * (1.0 - p) + z**2 / (4.0 * n)) / n)) / denom
+    lower = max(0.0, center - half)
+    upper = min(1.0, center + half)
+    return f"[{lower*100.0:.2f}%, {upper*100.0:.2f}%]"
+
+
 def write_results_md(meta_json, avg_ms, p95_ms, deg_results, lower_thresh, upper_thresh):
     val  = meta_json["validation_metrics"]
     hout = meta_json["held_out_cross_generator_metrics"]
     bands= hout["safety_bands"]
+
+    # True evaluation set counts: 100 held-out reals, 400 held-out Flux
+    n_reals = 100
+    n_flux = 400
+    k_real_fpr = int(round(bands['real_fpr'] * n_reals))                    # 1
+    k_real_inconc = int(round(bands['real_inconclusive_rate'] * n_reals))    # 52
+    k_real_likely = n_reals - k_real_fpr - k_real_inconc                    # 47
+    k_flux_det = int(round(bands['heldout_fake_detection_rate'] * n_flux))  # 6
+    k_flux_inconc = int(round(bands['heldout_fake_inconclusive_rate'] * n_flux)) # 154
 
     lines = [
         "# Trinetra Eye 3 (ai_lane) — Benchmark Results",
@@ -170,19 +194,21 @@ def write_results_md(meta_json, avg_ms, p95_ms, deg_results, lower_thresh, upper
         "",
         f"Decision thresholds tuned on **training-split validation reals only** (66 reals from SD/MJ/DALLE split; 0 overlap with held-out reals — verified by `ml/verify_thresholds.py`).",
         "",
+        f"The held-out test evaluation set consists of **100 real images** and **400 Flux images** (total: 500 images; 0 overlap with training/validation data).",
+        "",
         f"| Band threshold | Value |",
         f"| :--- | :--- |",
         f"| `likely_real_looking` if score < | **{lower_thresh:.4f}** |",
         f"| `likely_ai`           if score > | **{upper_thresh:.4f}** |",
         f"| `inconclusive`        otherwise  | [{lower_thresh:.4f}, {upper_thresh:.4f}] |",
         "",
-        f"| Metric on held-out test set | Value |",
-        f"| :--- | :--- |",
-        f"| **Real-image False-Positive Rate** | **{bands['real_fpr']*100:.2f}%** |",
-        f"| Real-image Inconclusive Rate | {bands['real_inconclusive_rate']*100:.2f}% |",
-        f"| Real-image Likely-Real Rate  | {(1-bands['real_fpr']-bands['real_inconclusive_rate'])*100:.2f}% |",
-        f"| Held-out fake (Flux) Detection Rate | {bands['heldout_fake_detection_rate']*100:.2f}% |",
-        f"| Held-out fake (Flux) Inconclusive Rate | {bands['heldout_fake_inconclusive_rate']*100:.2f}% |",
+        f"| Metric on held-out test set | Ratio (k / N) | Value | 95% CI (Wilson) |",
+        f"| :--- | :---: | :---: | :---: |",
+        f"| **Real-image False-Positive Rate** | {k_real_fpr} / {n_reals} | **{bands['real_fpr']*100:.2f}%** | {wilson_interval(k_real_fpr, n_reals)} |",
+        f"| Real-image Inconclusive Rate | {k_real_inconc} / {n_reals} | {bands['real_inconclusive_rate']*100:.2f}% | {wilson_interval(k_real_inconc, n_reals)} |",
+        f"| Real-image Likely-Real Rate  | {k_real_likely} / {n_reals} | {(k_real_likely/n_reals)*100:.2f}% | {wilson_interval(k_real_likely, n_reals)} |",
+        f"| Held-out fake (Flux) Detection Rate | {k_flux_det} / {n_flux} | {bands['heldout_fake_detection_rate']*100:.2f}% | {wilson_interval(k_flux_det, n_flux)} |",
+        f"| Held-out fake (Flux) Inconclusive Rate | {k_flux_inconc} / {n_flux} | {bands['heldout_fake_inconclusive_rate']*100:.2f}% | {wilson_interval(k_flux_inconc, n_flux)} |",
         "",
         "---",
         "",

@@ -35,6 +35,7 @@ class ChangeEyeEnum(str, Enum):
     found = "found"
     none = "none"
     na = "n/a"
+    inconclusive = "inconclusive"
 
 
 class SynthesisEyeEnum(str, Enum):
@@ -125,3 +126,5 @@ class HealthResponse(BaseModel):
     service: str
     version: str
     mock_mode: bool
+    ml_available: bool = True
+    c2pa_available: bool = True

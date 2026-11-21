@@ -4,9 +4,9 @@
   "confidence_band": "high",
   "reasons": [
     {
-      "key": "clip_ai_signal",
-      "en": "Cryptographic C2PA provenance manifest asserts generative AI pipeline creation.",
-      "hi": "क्रिप्टोग्राफ़िक C2PA घोषणापत्र पुष्टि करता है कि यह छवि जनरेटिव एआई द्वारा बनाई गई है।"
+      "key": "c2pa_valid",
+      "en": "Valid signed C2PA provenance manifest (self-signed DEMO signer, not on a trust list).",
+      "hi": "वैध हस्ताक्षरित C2PA घोषणापत्र (सेल्फ-साइंड डेमो हस्ताक्षरकर्ता, ट्रस्ट सूची में नहीं)।"
     }
   ],
   "eyes": {
@@ -18,28 +18,28 @@
   "diff": null,
   "c2pa": {
     "status": "valid",
-    "issuer": "OpenAI DALL-E 3 Content Credentials",
+    "issuer": "self-signed DEMO signer",
     "ai_generated": true,
     "history": [
       {
-        "action": "created",
-        "software": "DALL-E 3 / OpenAI Content Credentials Issuer",
+        "action": "c2pa.created",
+        "software": "Generative AI Engine (self-signed DEMO signer)",
         "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia"
       }
     ]
   },
   "suspicious_regions_url": null,
   "scope_note": {
-    "en": "Matched against the Trinetra fact-check index. For a wider web search, tap below.",
-    "hi": "त्रिनेत्र तथ्य-जांच सूचकांक से मिलान किया गया। व्यापक वेब खोज के लिए नीचे टैप करें।"
+    "en": "Checked against the Trinetra index. For a wider web search, tap below.",
+    "hi": "त्रिनेत्र इंडेक्स में जांच की गई। व्यापक खोज के लिए नीचे टैप करें।"
   },
   "external_search": {
     "lens": "https://lens.google.com/uploadbyurl?url=https://picsum.photos/seed/dalle3/400/300",
     "tineye": "https://tineye.com/search?url=https://picsum.photos/seed/dalle3/400/300"
   },
   "lang": {
-    "en": "AI-generated (confirmed) via cryptographically signed cryptographic provenance manifest.",
-    "hi": "क्रिप्टोग्राफ़िक रूप से हस्ताक्षरित घोषणापत्र द्वारा एआई-निर्मित (पुष्ट)।"
+    "en": "AI-Generated (Confirmed)",
+    "hi": "एआई-निर्मित (पुष्ट)"
   },
   "demo_data": true
 }

@@ -11,19 +11,21 @@
 
 Decision thresholds tuned on **training-split validation reals only** (66 reals from SD/MJ/DALLE split; 0 overlap with held-out reals — verified by `ml/verify_thresholds.py`).
 
+The held-out test evaluation set consists of **100 real images** and **400 Flux images** (total: 500 images; 0 overlap with training/validation data).
+
 | Band threshold | Value |
 | :--- | :--- |
 | `likely_real_looking` if score < | **0.0366** |
 | `likely_ai`           if score > | **0.9728** |
 | `inconclusive`        otherwise  | [0.0366, 0.9728] |
 
-| Metric on held-out test set | Value |
-| :--- | :--- |
-| **Real-image False-Positive Rate** | **1.00%** |
-| Real-image Inconclusive Rate | 52.00% |
-| Real-image Likely-Real Rate  | 47.00% |
-| Held-out fake (Flux) Detection Rate | 1.50% |
-| Held-out fake (Flux) Inconclusive Rate | 38.50% |
+| Metric on held-out test set | Ratio (k / N) | Value | 95% CI (Wilson) |
+| :--- | :---: | :---: | :---: |
+| **Real-image False-Positive Rate** | 1 / 100 | **1.00%** | [0.18%, 5.45%] |
+| Real-image Inconclusive Rate | 52 / 100 | 52.00% | [42.32%, 61.54%] |
+| Real-image Likely-Real Rate  | 47 / 100 | 47.00% | [37.51%, 56.71%] |
+| Held-out fake (Flux) Detection Rate | 6 / 400 | 1.50% | [0.69%, 3.23%] |
+| Held-out fake (Flux) Inconclusive Rate | 154 / 400 | 38.50% | [33.86%, 43.36%] |
 
 ---
 

@@ -5,7 +5,7 @@ POST /match_hash {phash} -> {matched, origin_summary|null}
 
 from fastapi import APIRouter
 from app.schemas import MatchHashRequest, MatchHashResponse
-from app.config import MOCK_MODE
+from app import config as cfg
 
 try:
     from origin_match import match_origin
@@ -38,7 +38,7 @@ async def match_hash(payload: MatchHashRequest):
         )
 
     # In mock mode fallback, if hash equals dummy known hash or starts with 'demo_', return match
-    if MOCK_MODE:
+    if cfg.MOCK_MODE:
         if phash.startswith("demo_") or phash in ("0000000000000000", "ffffffffffffffff"):
             return MatchHashResponse(
                 matched=True,

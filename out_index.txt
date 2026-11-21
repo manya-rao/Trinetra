@@ -1,0 +1,2 @@
+FAISS index written to C:\cloud\Desktop\Trinetra-repo\backend\data\faiss.idx
+SQLite index successfully populated at C:\cloud\Desktop\Trinetra-repo\backend\data\index.sqlite with 64 demo records.
