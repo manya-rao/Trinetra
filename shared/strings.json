@@ -165,6 +165,10 @@
       "en": "Standard camera EXIF metadata absent or stripped.",
       "hi": "मानक कैमरा EXIF मेटाडेटा अनुपस्थित या हटा दिया गया है।"
     },
+    "camera_metadata_present": {
+      "en": "Camera metadata present. Pixels alone cannot show AI use.",
+      "hi": "कैमरा मेटाडेटा मौजूद है। केवल पिक्सेल से एआई उपयोग सिद्ध नहीं हो सकता।"
+    },
     "clip_ai_signal": {
       "en": "Semantic visual features strongly match synthetic image distribution manifolds.",
       "hi": "दृश्य विशेषताएं कृत्रिम एआई छवियों के पैटर्न से मेल खाती हैं।"

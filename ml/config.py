@@ -62,7 +62,8 @@ VALID_REASONS = {
     "low_resolution",
     "heavy_compression",
     "signals_disagree",
-    "generator_tag_found"
+    "generator_tag_found",
+    "camera_metadata_present"
 }
 
 # Known generator tags in EXIF / XMP / Software metadata

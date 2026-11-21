@@ -8,89 +8,89 @@
     "dalle"
   ],
   "samples_count": {
-    "total": 2000,
+    "total": 2001,
     "train": 1125,
-    "val": 375,
+    "val": 376,
     "test_heldout": 500
   },
   "thresholds": {
-    "lower_real_band": 0.03657088575384907,
-    "upper_ai_band": 0.9728107601035755
+    "lower_real_band": 0.02532929289608088,
+    "upper_ai_band": 0.9810089256862559
   },
   "validation_metrics": {
     "clip_probe": {
-      "accuracy": 0.8746666666666667,
-      "roc_auc": 0.9354712170246151,
-      "precision": 0.9281045751633987,
-      "recall": 0.919093851132686,
-      "fpr": 0.3333333333333333,
-      "tn": 44,
-      "fp": 22,
-      "fn": 25,
-      "tp": 284
+      "accuracy": 0.9175531914893617,
+      "roc_auc": 0.9648832070707071,
+      "precision": 0.9355932203389831,
+      "recall": 0.9583333333333334,
+      "fpr": 0.2159090909090909,
+      "tn": 69,
+      "fp": 19,
+      "fn": 12,
+      "tp": 276
     },
     "forensic_clf": {
-      "accuracy": 0.9306666666666666,
-      "roc_auc": 0.9695008335785035,
-      "precision": 0.9435736677115988,
-      "recall": 0.9741100323624595,
-      "fpr": 0.2727272727272727,
-      "tn": 48,
-      "fp": 18,
-      "fn": 8,
-      "tp": 301
+      "accuracy": 0.901595744680851,
+      "roc_auc": 0.9459832702020203,
+      "precision": 0.9009584664536742,
+      "recall": 0.9791666666666666,
+      "fpr": 0.3522727272727273,
+      "tn": 57,
+      "fp": 31,
+      "fn": 6,
+      "tp": 282
     },
     "calibrated_fusion": {
-      "accuracy": 0.896,
-      "roc_auc": 0.9680788467196234,
-      "precision": 0.9354838709677419,
-      "recall": 0.9385113268608414,
-      "fpr": 0.30303030303030304,
-      "tn": 46,
-      "fp": 20,
-      "fn": 19,
-      "tp": 290
+      "accuracy": 0.9281914893617021,
+      "roc_auc": 0.9711568813131314,
+      "precision": 0.9393939393939394,
+      "recall": 0.96875,
+      "fpr": 0.20454545454545456,
+      "tn": 70,
+      "fp": 18,
+      "fn": 9,
+      "tp": 279
     }
   },
   "held_out_cross_generator_metrics": {
     "clip_probe": {
-      "accuracy": 0.308,
-      "roc_auc": 0.42205000000000004,
-      "precision": 0.7454545454545455,
-      "recall": 0.205,
-      "fpr": 0.28,
-      "tn": 72,
-      "fp": 28,
-      "fn": 318,
-      "tp": 82
-    },
-    "forensic_clf": {
-      "accuracy": 0.332,
-      "roc_auc": 0.504775,
-      "precision": 0.7844827586206896,
-      "recall": 0.2275,
-      "fpr": 0.25,
-      "tn": 75,
-      "fp": 25,
-      "fn": 309,
-      "tp": 91
-    },
-    "calibrated_fusion": {
-      "accuracy": 0.304,
-      "roc_auc": 0.45285000000000003,
-      "precision": 0.75,
-      "recall": 0.195,
+      "accuracy": 0.314,
+      "roc_auc": 0.438525,
+      "precision": 0.7614678899082569,
+      "recall": 0.2075,
       "fpr": 0.26,
       "tn": 74,
       "fp": 26,
-      "fn": 322,
-      "tp": 78
+      "fn": 317,
+      "tp": 83
+    },
+    "forensic_clf": {
+      "accuracy": 0.304,
+      "roc_auc": 0.411475,
+      "precision": 0.696969696969697,
+      "recall": 0.23,
+      "fpr": 0.4,
+      "tn": 60,
+      "fp": 40,
+      "fn": 308,
+      "tp": 92
+    },
+    "calibrated_fusion": {
+      "accuracy": 0.288,
+      "roc_auc": 0.416125,
+      "precision": 0.7244897959183674,
+      "recall": 0.1775,
+      "fpr": 0.27,
+      "tn": 73,
+      "fp": 27,
+      "fn": 329,
+      "tp": 71
     },
     "safety_bands": {
       "real_fpr": 0.01,
-      "real_inconclusive_rate": 0.52,
-      "heldout_fake_detection_rate": 0.015,
-      "heldout_fake_inconclusive_rate": 0.385
+      "real_inconclusive_rate": 0.6,
+      "heldout_fake_detection_rate": 0.0,
+      "heldout_fake_inconclusive_rate": 0.485
     }
   }
 }

@@ -21,13 +21,10 @@ import numpy as np
 import joblib
 
 from ml.config import MODEL_FILE, METADATA_FILE
-from ml.gate import evaluate_gate
+from ml.gate import evaluate_gate, check_camera_metadata
 from ml.reasons import format_reasons
 from ml.suspicious_map import generate_suspicious_map
-from ml.features.clip_features import extract_clip_embedding
-from ml.features.frequency import extract_frequency_features
-from ml.features.noise import extract_noise_features
-from ml.features.metadata import extract_metadata_features
+from ml.features.pipeline import extract_all_features
 
 # Global model cache (loaded once)
 _MODEL_BUNDLE = None
@@ -83,6 +80,7 @@ def predict(image: Image.Image, meta: Optional[Dict[str, Any]] = None) -> Dict[s
 
     has_exif = meta.get("has_exif", True)
     generator_tag = meta.get("generator_tag")
+    has_camera_exif = check_camera_metadata(image)
 
     # Initial Gate Evaluation (resolution, severe compression, screenshot borders)
     gate_triggered, gate_reasons = evaluate_gate(
@@ -98,7 +96,9 @@ def predict(image: Image.Image, meta: Optional[Dict[str, Any]] = None) -> Dict[s
     if generator_tag:
         reasons_keys.append("generator_tag_found")
 
-    if not has_exif:
+    if has_camera_exif:
+        reasons_keys.append("camera_metadata_present")
+    elif not has_exif:
         reasons_keys.append("no_camera_metadata")
 
     bundle = get_model_bundle()
@@ -114,12 +114,12 @@ def predict(image: Image.Image, meta: Optional[Dict[str, Any]] = None) -> Dict[s
                 suspicious_map = None
     else:
         try:
-            # 1. Feature extraction
-            img_rgb = image.convert("RGB")
-            clip_emb = extract_clip_embedding(img_rgb)
-            freq_feat = extract_frequency_features(img_rgb)
-            noise_feat = extract_noise_features(img_rgb)
-            meta_feat = extract_metadata_features(img_rgb, meta)
+            # 1. Feature extraction using canonical pipeline
+            features = extract_all_features(image, meta=meta)
+            clip_emb = features["clip"]
+            freq_feat = features["frequency"]
+            noise_feat = features["noise"]
+            meta_feat = features["metadata"]
 
             # 2. Individual sub-models
             c_scaled = bundle["clip_scaler"].transform(clip_emb[None, :])
@@ -165,6 +165,20 @@ def predict(image: Image.Image, meta: Optional[Dict[str, Any]] = None) -> Dict[s
                     band = "likely_ai"
                 else:
                     band = "inconclusive"
+
+                # Guardrail 1: likely_ai strictly requires BOTH CLIP probe and forensic classifier to agree on AI
+                # Never allow CLIP alone to produce likely_ai
+                if band == "likely_ai":
+                    if p_prob < 0.65 or fn_prob < 0.65:
+                        band = "inconclusive"
+                        if "signals_disagree" not in reasons_keys:
+                            reasons_keys.append("signals_disagree")
+
+                # Guardrail 2: Camera metadata guardrail
+                # If image carries genuine camera EXIF, it can NEVER be likely_ai
+                if has_camera_exif and band == "likely_ai":
+                    band = "inconclusive"
+                    gate_triggered = True
 
                 # 5. Populate specific forensic reasons
                 if p_prob > 0.60:

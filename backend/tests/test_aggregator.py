@@ -238,6 +238,25 @@ class TestAggregatorLadder(unittest.TestCase):
         keys = [r["key"] for r in res["reasons"]]
         self.assertIn("low_resolution", keys)
 
+    def test_camera_metadata_present_reason_handled(self):
+        """Camera metadata present reason is preserved by aggregator."""
+        ml_out = {
+            "band": "inconclusive",
+            "reasons": [{"key": "camera_metadata_present", "en": "Camera metadata present. Pixels alone cannot show AI use.", "hi": "कैमरा मेटाडेटा मौजूद है। केवल पिक्सेल से एआई उपयोग सिद्ध नहीं हो सकता।"}],
+            "gate_triggered": True
+        }
+        res = aggregate(
+            phash_match=None,
+            diff_result=None,
+            c2pa=None,
+            ml_output=ml_out,
+            demo_data=self.demo,
+        )
+        keys = [r["key"] for r in res["reasons"]]
+        self.assertIn("camera_metadata_present", keys)
+        self.assertEqual(res["verdict"], "inconclusive")
+
+
 
 
 if __name__ == "__main__":

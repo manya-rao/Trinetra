@@ -77,28 +77,55 @@ def evaluate_predictions(y_true, y_prob, threshold=0.5):
         "tp": int(tp)
     }
 
+from ml.data.ingest_user import ingest_user_data
+
 def train_and_evaluate():
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
     
     logger.info("Loading cached feature matrices...")
     clip_X, freq_X, noise_X, meta_X, y, generators = load_cached_data()
+    n_cached = len(y)
+    logger.info(f"Loaded {n_cached} cached samples.")
+
+    # Ingest user data from ml/data/user/ (real, real_whatsapp, ai/<generator>)
+    logger.info("Ingesting user data from ml/data/user/...")
+    user_data = ingest_user_data()
+    n_user = user_data["total_count"]
+    
+    # Assign source IDs to enforce splitting by source photo
+    source_ids = [f"raw_{i}" for i in range(n_cached)]
+    if n_user > 0:
+        clip_X = np.concatenate([clip_X, user_data["clip"]], axis=0)
+        freq_X = np.concatenate([freq_X, user_data["frequency"]], axis=0)
+        noise_X = np.concatenate([noise_X, user_data["noise"]], axis=0)
+        meta_X = np.concatenate([meta_X, user_data["metadata"]], axis=0)
+        y = np.concatenate([y, user_data["labels"]], axis=0)
+        generators = np.concatenate([generators, user_data["generators"]], axis=0)
+        source_ids.extend(user_data["sources"].tolist())
+        logger.info(f"Appended {n_user} user samples. Total dataset size: {len(y)}")
+    else:
+        logger.info(f"No user samples added. Total dataset size: {len(y)}")
+
+    source_ids = np.array(source_ids)
     n_samples = len(y)
-    logger.info(f"Loaded {n_samples} total samples.")
     
     # Combined forensic features (frequency + noise)
     forensic_X = np.concatenate([freq_X, noise_X], axis=1)
     
     # 1. Partition into Training-Generators vs Held-Out-Generator ('flux')
     heldout_mask = (generators == HELD_OUT_GENERATOR)
-    # Also partition real images into train/test so held-out test set has both real and unseen fake
-    real_indices = np.where(generators == "real")[0]
-    np.random.seed(42)
-    shuffled_reals = np.random.permutation(real_indices)
     
-    # 25% of reals reserved for held-out evaluation
-    n_heldout_reals = len(shuffled_reals) // 4
-    heldout_real_idx = shuffled_reals[:n_heldout_reals]
-    train_real_idx = shuffled_reals[n_heldout_reals:]
+    # Partition real images by UNIQUE SOURCE PHOTO into train/test (25% held out)
+    real_indices = np.where(generators == "real")[0]
+    unique_real_sources = np.unique(source_ids[real_indices])
+    np.random.seed(42)
+    shuffled_real_sources = np.random.permutation(unique_real_sources)
+    
+    n_heldout_sources = max(1, len(shuffled_real_sources) // 4)
+    heldout_sources_set = set(shuffled_real_sources[:n_heldout_sources])
+    
+    heldout_real_idx = np.array([idx for idx in real_indices if source_ids[idx] in heldout_sources_set])
+    train_real_idx = np.array([idx for idx in real_indices if source_ids[idx] not in heldout_sources_set])
     
     heldout_fake_idx = np.where(heldout_mask)[0]
     test_idx = np.concatenate([heldout_real_idx, heldout_fake_idx])
@@ -108,11 +135,14 @@ def train_and_evaluate():
     train_fake_idx = np.where(train_fake_mask)[0]
     all_train_idx = np.concatenate([train_real_idx, train_fake_idx])
     
-    # Further split all_train_idx into Train (75%) and Val (25%) for calibration and threshold tuning
-    np.random.shuffle(all_train_idx)
-    split_pt = int(0.75 * len(all_train_idx))
-    train_idx = all_train_idx[:split_pt]
-    val_idx = all_train_idx[split_pt:]
+    # Further split all_train_idx into Train (75%) and Val (25%) by unique source photo
+    all_train_sources = np.unique(source_ids[all_train_idx])
+    np.random.shuffle(all_train_sources)
+    split_src_pt = int(0.75 * len(all_train_sources))
+    train_sources_set = set(all_train_sources[:split_src_pt])
+    
+    train_idx = np.array([idx for idx in all_train_idx if source_ids[idx] in train_sources_set])
+    val_idx = np.array([idx for idx in all_train_idx if source_ids[idx] not in train_sources_set])
     
     logger.info(f"Split sizes: Train={len(train_idx)}, Val={len(val_idx)}, Held-Out Test={len(test_idx)}")
     
@@ -207,6 +237,11 @@ def train_and_evaluate():
     # =========================================================================
     # Threshold Tuning for Safety Bands (Target: FPR <= 1.0% on Real Validation)
     # =========================================================================
+    logger.info("=========================================================================")
+    logger.info("NOTICE: Prior safety thresholds (lower_real=0.0366, upper_ai=0.9728) are VOID.")
+    logger.info("Computing fresh safety decision thresholds strictly from training-split validation reals...")
+    logger.info("=========================================================================")
+    
     val_real_mask = (y[val_idx] == 0)
     val_real_probs = fusion_val_prob[val_real_mask]
     
@@ -215,11 +250,9 @@ def train_and_evaluate():
     lower_threshold = float(np.percentile(val_real_probs, 50))
     # Threshold above which an image is declared 'likely_ai'
     # Use 99th-percentile of val-real calibrated scores: target FPR <= 1% on validation reals
-    # NOTE: do NOT clamp these; the unconstrained data-driven values achieved 1% FPR
-    # on the held-out cross-generator test set when we evaluated them.
     upper_threshold = float(np.percentile(val_real_probs, 99.0))
     
-    logger.info(f"Tuned Safety Decision Thresholds: lower_real={lower_threshold:.4f}, upper_ai={upper_threshold:.4f}")
+    logger.info(f"New Data-Driven Safety Decision Thresholds: lower_real={lower_threshold:.4f}, upper_ai={upper_threshold:.4f}")
     
     # Compute band distribution on Test Set (Unseen Held-out 'flux' + Reals)
     test_bands = []

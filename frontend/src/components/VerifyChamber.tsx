@@ -689,19 +689,45 @@ export const VerifyChamber: React.FC<VerifyChamberProps> = ({ lang }) => {
               )}
             </div>
 
-            {/* 4. Comparison Slider */}
-            <div className="space-y-3 pt-4 border-t border-surface/60">
-              <h4 className="font-display text-sm font-semibold tracking-wider text-muted uppercase">
-                {lang === 'en' ? 'VISUAL COMPARISON SLIDER' : 'दृश्य तुलना स्लाइडर'}
-              </h4>
-              <ComparisonSlider
-                userImageUrl={userImageUrl}
-                originalThumbUrl={passport.origin?.thumb_url || null}
-                changedRegions={passport.diff?.changed_regions}
-                hasSuspiciousOverlay={Boolean(passport.suspicious_regions_url)}
-                lang={lang}
-              />
-            </div>
+            {/* 4. Comparison Slider — only when both origin AND diff exist */}
+            {passport.origin && passport.diff ? (
+              <div className="space-y-3 pt-4 border-t border-surface/60">
+                <h4 className="font-display text-sm font-semibold tracking-wider text-muted uppercase">
+                  {lang === 'en' ? 'VISUAL COMPARISON SLIDER' : 'दृश्य तुलना स्लाइडर'}
+                </h4>
+                <ComparisonSlider
+                  userImageUrl={userImageUrl}
+                  originalThumbUrl={passport.origin.thumb_url || null}
+                  changedRegions={passport.diff.changed_regions}
+                  hasSuspiciousOverlay={Boolean(passport.suspicious_regions_url)}
+                  lang={lang}
+                />
+              </div>
+            ) : userImageUrl ? (
+              /* No origin match — show submitted image with suspicious-regions overlay only */
+              <div className="space-y-3 pt-4 border-t border-surface/60">
+                <h4 className="font-display text-sm font-semibold tracking-wider text-muted uppercase">
+                  {lang === 'en' ? 'SUBMITTED IMAGE' : 'प्रस्तुत छवि'}
+                </h4>
+                <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-xl border border-surface overflow-hidden bg-void flex items-center justify-center">
+                  <img
+                    src={userImageUrl}
+                    alt="Submitted Image"
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
+                  {passport.suspicious_regions_url && (
+                    <div className="absolute top-3 left-3 bg-orange-500/90 text-void font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow pointer-events-none">
+                      {lang === 'en'
+                        ? 'Suspicious regions, not proof'
+                        : 'संभावित संदेहास्पद क्षेत्र (प्रमाण नहीं)'}
+                    </div>
+                  )}
+                  <span className="absolute bottom-3 left-3 font-mono text-[10px] bg-void/80 text-accent px-2 py-0.5 rounded border border-surface pointer-events-none">
+                    {lang === 'en' ? 'SUBMITTED' : 'प्रस्तुत छवि'}
+                  </span>
+                </div>
+              </div>
+            ) : null}
 
             {/* 5. Scope Note & External Search */}
             <div className="p-4 rounded-xl border border-surface bg-void space-y-3">

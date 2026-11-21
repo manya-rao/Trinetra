@@ -484,11 +484,12 @@ export const Hero: React.FC<HeroProps> = ({ lang }) => {
               <p className="text-[9px] text-muted font-sans">Local pixel delta heatmap</p>
             </div>
 
-            {/* Shard 3: Synthetic Grain */}
+            {/* Shard 3: Synthetic Grain — centred horizontally to avoid overlap at all widths */}
             <div
-              className="absolute bottom-4 sm:bottom-12 w-40 sm:w-48 p-3 rounded-lg border border-orange-500/40 bg-void-2/90 backdrop-blur-md shadow-2xl"
+              className="absolute bottom-4 sm:bottom-10 w-40 sm:w-48 p-3 rounded-lg border border-orange-500/40 bg-void-2/90 backdrop-blur-md shadow-2xl"
               style={{
-                transform: 'rotateY(8deg) rotateX(-16deg) translateZ(50px)',
+                left: '50%',
+                transform: 'translateX(-50%) rotateY(8deg) rotateX(-16deg) translateZ(50px)',
               }}
             >
               <div className="flex items-center justify-between border-b border-surface/80 pb-1.5 mb-2 text-[10px] font-mono text-muted">

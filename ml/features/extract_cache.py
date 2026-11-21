@@ -23,10 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_DIR = BASE_DIR / "data" / "raw"
 CACHE_DIR = BASE_DIR / "data" / "cache"
 
-from ml.features.clip_features import extract_clip_embedding
-from ml.features.frequency import extract_frequency_features
-from ml.features.noise import extract_noise_features
-from ml.features.metadata import extract_metadata_features
+from ml.features.pipeline import extract_all_features
 
 def run_extraction():
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -61,19 +58,11 @@ def run_extraction():
     for idx, (img_path, gen_name) in enumerate(tqdm(image_files, desc="Extracting")):
         try:
             with Image.open(img_path) as img:
-                img_rgb = img.convert("RGB")
-                
-                # 1. OpenCLIP feature
-                clip_emb = extract_clip_embedding(img_rgb)
-                
-                # 2. Frequency feature
-                freq_feat = extract_frequency_features(img_rgb)
-                
-                # 3. Noise & ELA feature
-                noise_feat = extract_noise_features(img_rgb)
-                
-                # 4. Metadata feature
-                meta_feat = extract_metadata_features(img_rgb)
+                features = extract_all_features(img)
+                clip_emb = features["clip"]
+                freq_feat = features["frequency"]
+                noise_feat = features["noise"]
+                meta_feat = features["metadata"]
                 
                 label = 0 if gen_name == "real" else 1
                 

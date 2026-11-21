@@ -34,6 +34,42 @@ def check_screenshot_border(image: Image.Image) -> bool:
     except Exception:
         return False
 
+def check_camera_metadata(image: Image.Image) -> bool:
+    """
+    Checks if image carries genuine camera EXIF metadata:
+    - Camera Make (tag 271) or Model (tag 272) is present and non-empty.
+    - AND at least one physical exposure/camera setting field is present:
+      ExposureTime (33434), FNumber (33437), ISOSpeedRatings (34855),
+      ShutterSpeedValue (37377), ApertureValue (37378), FocalLength (37386).
+
+    Documented Guardrail Guarantee:
+    Camera EXIF can be stripped or forged, so metadata is NOT cryptographic proof of authenticity.
+    However, when genuine capture metadata is present, pixels alone cannot substantiate an
+    affirmative AI accusation, forcing an Inconclusive verdict with 'camera_metadata_present'.
+    """
+    try:
+        exif = image.getexif()
+        if not exif or len(exif) == 0:
+            return False
+
+        make = str(exif.get(271, "")).strip()
+        model = str(exif.get(272, "")).strip()
+        if not (make or model):
+            return False
+
+        exposure_tags = {33434, 33437, 34855, 37377, 37378, 37386}
+        if any(tag in exif for tag in exposure_tags):
+            return True
+
+        from PIL import ExifTags
+        ifd = exif.get_ifd(ExifTags.IFD.Exif)
+        if ifd and any(tag in ifd for tag in exposure_tags):
+            return True
+
+        return False
+    except Exception:
+        return False
+
 def evaluate_gate(
     width: int,
     height: int,

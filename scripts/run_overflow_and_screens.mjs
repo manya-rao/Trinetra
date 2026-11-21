@@ -41,9 +41,10 @@ async function main() {
 
   // 1. Start Vite Preview Server
   console.log('1. Starting Vite preview server on port', FRONTEND_PORT, '...');
-  const viteProc = spawn('npx.cmd', ['vite', 'preview', '--port', String(FRONTEND_PORT)], {
+  const viteBin = path.join(rootDir, 'frontend', 'node_modules', '.bin', 'vite.cmd');
+  const viteProc = spawn(viteBin, ['preview', '--host', '127.0.0.1', '--port', String(FRONTEND_PORT), '--strictPort'], {
     cwd: path.join(rootDir, 'frontend'),
-    stdio: 'ignore',
+    stdio: 'inherit',
     shell: true,
   });
 
@@ -184,9 +185,10 @@ async function main() {
 
   console.table(overflowResults);
 
-  // 4. Capture Screenshots of #top, #problem, #pipeline, #verify (passport state), #ladder at 390 and 1280
-  console.log('\n4. Capturing screenshots for required sections at 390 and 1280 into docs/screens/...\n');
-  const captureWidths = [390, 1280];
+  // 4. Capture Screenshots of #top (at all 4 sizes: 390, 768, 1280, 1920)
+  // and full section suite at 390, 768, 1280, 1920
+  console.log('\n4. Capturing screenshots across all viewports (390, 768, 1280, 1920) into docs/screens/...\n');
+  const captureWidths = [390, 768, 1280, 1920];
 
   for (const w of captureWidths) {
     console.log(`>>> Capturing for width ${w}px...`);
@@ -198,6 +200,17 @@ async function main() {
     });
     await send('Page.navigate', { url: `http://127.0.0.1:${FRONTEND_PORT}` });
     await wait(1200);
+
+    // Hero at scroll progress (where shards and eye are active to verify no overlap)
+    await send('Runtime.evaluate', {
+      expression: `window.scrollTo(0, 600);`,
+    });
+    await wait(600);
+    const shotHeroScroll = await send('Page.captureScreenshot', { format: 'png' });
+    const heroFilename = `${w}_top_shards.png`;
+    const heroPath = path.join(screensDir, heroFilename);
+    fs.writeFileSync(heroPath, Buffer.from(shotHeroScroll.result.data, 'base64'));
+    console.log(`  ✓ Saved ${heroFilename} (${(fs.statSync(heroPath).size / 1024).toFixed(1)} KB)`);
 
     const sections = ['#top', '#problem', '#pipeline', '#ladder'];
     for (const secId of sections) {

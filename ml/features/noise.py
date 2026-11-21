@@ -11,6 +11,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 from scipy.stats import kurtosis, skew
 from ml.config import NOISE_GRID_PATCHES
+from ml.features.crop_util import get_fixed_crops
 
 def compute_ela_residual(image: Image.Image, quality: int = 90) -> np.ndarray:
     """Computes Error Level Analysis residual array."""
@@ -25,12 +26,7 @@ def compute_ela_residual(image: Image.Image, quality: int = 90) -> np.ndarray:
     ela = np.abs(arr_orig - arr_recomp).mean(axis=2) # 2D array
     return ela
 
-def extract_noise_features(image: Image.Image, grid_size: int = NOISE_GRID_PATCHES) -> np.ndarray:
-    """
-    Extracts spatial noise and compression inconsistency features.
-    Returns 1D numpy array of fixed length.
-    """
-    rgb = image.convert("RGB")
+def _extract_single_crop_noise(rgb: Image.Image, grid_size: int = NOISE_GRID_PATCHES) -> np.ndarray:
     w, h = rgb.size
     
     # 1. High-pass residual via median filter subtraction
@@ -66,8 +62,6 @@ def extract_noise_features(image: Image.Image, grid_size: int = NOISE_GRID_PATCH
     patch_kurt_arr = np.clip(patch_kurt_arr, -3.0, 30.0)
     
     # 3. Global noise statistics
-    # Guard against zero-variance flat images (synthetic test images, heavily blurred inputs).
-    # scipy.stats.skew/kurtosis return NaN for constant arrays; replace with 0.0.
     flat_res = residual.flatten()
     glob_mean = float(np.mean(flat_res))
     glob_std = float(np.std(flat_res))
@@ -112,7 +106,14 @@ def extract_noise_features(image: Image.Image, grid_size: int = NOISE_GRID_PATCH
         float(np.percentile(patch_kurt_arr, 90))
     ], dtype=np.float32)
     
-    # Safety: replace any residual NaNs / Infs with 0.0 (can occur on
-    # pathological inputs: flat synthetic images, fully-black frames, etc.)
     summary_features = np.nan_to_num(summary_features, nan=0.0, posinf=0.0, neginf=0.0)
     return summary_features
+
+def extract_noise_features(image: Image.Image, grid_size: int = NOISE_GRID_PATCHES) -> np.ndarray:
+    """
+    Extracts spatial noise and compression inconsistency features normalized across fixed-size 384x384 crops.
+    Ensures full-resolution camera photos and 384px training images produce comparable feature statistics.
+    """
+    crops = get_fixed_crops(image, crop_size=384, max_crops=5)
+    crop_feats = [_extract_single_crop_noise(c.convert("RGB"), grid_size) for c in crops]
+    return np.mean(crop_feats, axis=0).astype(np.float32)

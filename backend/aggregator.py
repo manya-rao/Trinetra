@@ -210,8 +210,9 @@ def aggregate(
             passport["reasons"].append(_reason_entry("gate_triggered"))
             # Append specific gate rule that fired
             for rk in ml_output.get("reasons", []):
-                if rk in ("low_resolution", "heavy_compression", "signals_disagree"):
-                    passport["reasons"].append(_reason_entry(rk))
+                rk_key = rk.get("key") if isinstance(rk, dict) else rk
+                if rk_key in ("low_resolution", "heavy_compression", "signals_disagree", "camera_metadata_present"):
+                    passport["reasons"].append(_reason_entry(rk_key))
             _set_verdict_lang(passport)
             return passport
 

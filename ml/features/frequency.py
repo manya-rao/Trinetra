@@ -10,26 +10,19 @@ import numpy as np
 from PIL import Image
 from typing import Tuple
 from ml.config import FFT_AZIMUTHAL_BINS
+from ml.features.crop_util import get_fixed_crops
 
-def extract_frequency_features(image: Image.Image, num_bins: int = FFT_AZIMUTHAL_BINS) -> np.ndarray:
-    """
-    Extracts frequency features from PIL image.
-    Returns 1D numpy array of shape (num_bins + 6,):
-    - Azimuthal average bins (num_bins,)
-    - Log-magnitude mean, std, max, median, skewness proxy, high-freq energy ratio (6,)
-    """
-    # 1. Convert to grayscale and float32 normalized [0, 1]
-    gray = image.convert("L")
-    arr = np.asarray(gray, dtype=np.float32) / 255.0
+def _extract_single_crop_frequency(gray_crop: Image.Image, num_bins: int = FFT_AZIMUTHAL_BINS) -> np.ndarray:
+    arr = np.asarray(gray_crop, dtype=np.float32) / 255.0
     h, w = arr.shape
     
-    # 2. 2D FFT and center DC component
+    # 2D FFT and center DC component
     fft2 = np.fft.fft2(arr)
     fft2_shifted = np.fft.fftshift(fft2)
     magnitude = np.abs(fft2_shifted)
     log_mag = np.log1p(magnitude) # log(1 + |FFT|)
     
-    # 3. Azimuthal (radial) average
+    # Azimuthal (radial) average
     cy, cx = h // 2, w // 2
     y, x = np.ogrid[:h, :w]
     r = np.hypot(x - cx, y - cy)
@@ -51,8 +44,7 @@ def extract_frequency_features(image: Image.Image, num_bins: int = FFT_AZIMUTHAL
     profile_std = azimuthal_profile.std() + 1e-6
     azimuthal_norm = (azimuthal_profile - profile_mean) / profile_std
     
-    # 4. Peak statistics (periodic upsampling artifacts create isolated frequency spikes)
-    # Differences from smooth radial decay
+    # Peak statistics (periodic upsampling artifacts create isolated frequency spikes)
     diffs = np.abs(np.diff(azimuthal_profile, 2)) if num_bins >= 3 else np.array([0.0])
     peak_prominence_max = float(np.max(diffs)) if len(diffs) > 0 else 0.0
     peak_prominence_mean = float(np.mean(diffs)) if len(diffs) > 0 else 0.0
@@ -77,3 +69,13 @@ def extract_frequency_features(image: Image.Image, num_bins: int = FFT_AZIMUTHAL
     ], dtype=np.float32)
     
     return np.concatenate([azimuthal_norm, stats])
+
+def extract_frequency_features(image: Image.Image, num_bins: int = FFT_AZIMUTHAL_BINS) -> np.ndarray:
+    """
+    Extracts frequency features from PIL image normalized across fixed-size 384x384 crops.
+    Ensures full-resolution camera photos (e.g. 12-24 MP) and 384px training images
+    produce comparable, scale-invariant feature vectors.
+    """
+    crops = get_fixed_crops(image, crop_size=384, max_crops=5)
+    crop_feats = [_extract_single_crop_frequency(c.convert("L"), num_bins) for c in crops]
+    return np.mean(crop_feats, axis=0).astype(np.float32)
